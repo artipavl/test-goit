@@ -7,10 +7,17 @@ import Picture from 'img/picture.svg';
 import { Avatar, Box, Text, User, Cover, Logo, Svg } from './twrrt.styled';
 
 import Button from 'components/button/button';
-// import { following } from 'redux/followingSlise';
+import { useState } from 'react';
 
 const Tweet = ({ user, onUpdate }) => {
-  // const disputch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  function onFollow(params) {
+    setLoading(true);
+    onUpdate(user).then(() => {
+      setLoading(false);
+    });
+  }
 
   const follow = useSelector(state => state.folloving.following);
 
@@ -141,8 +148,9 @@ const Tweet = ({ user, onUpdate }) => {
         <Text>{formateNumber(user.followers)} Followers</Text>
       </User>
       <Button
+        disabled={loading}
         active={follow.includes(user.id)}
-        onClick={() => onUpdate(user)}
+        onClick={onFollow}
       />
     </Box>
   );
