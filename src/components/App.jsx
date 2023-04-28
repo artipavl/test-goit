@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import TweetList from './tweetList/tweetList';
+import { useMemo } from 'react';
+import ButtonLoad from './button/buttonLoad';
 
 export const App = () => {
   const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     if (users.length === 0) {
@@ -22,15 +25,24 @@ export const App = () => {
       console.log(error);
     }
   }
+
+  const usersList = useMemo(() => {
+    return users.slice(0, 3 * page);
+  }, [page, users]);
   return (
     <div
       style={{
-        height: '100vh',
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        gap: '15px',
       }}
     >
-      <TweetList list={users} />
+      <TweetList list={usersList} />
+      {users.length > usersList.length && (
+        <ButtonLoad onClick={() => setPage(page => page + 1)} />
+      )}
     </div>
   );
 };
