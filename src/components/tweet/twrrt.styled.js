@@ -83,3 +83,8 @@ export const Text = styled.p`
 
   color: #ebd8ff;
 `;
+
+export const Svg = styled.div`
+  position: absolute;
+  top: 0;
+`;
