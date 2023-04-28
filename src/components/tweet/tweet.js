@@ -6,6 +6,20 @@ import Goit from 'img/logo.svg';
 import Picture from 'img/picture.svg';
 
 const Tweet = ({ user }) => {
+  function formateNumber(number) {
+    let str = '';
+    let num = number.toString();
+    let i = 0;
+    for (let index = num.length - 1; index >= 0; index--) {
+      str = num[index] + str;
+      i++;
+      if (Number.isInteger(i / 3) && index !== 0) {
+        str = ',' + str;
+      }
+    }
+    return str;
+  }
+
   return (
     <Box>
       <Logo src={Goit} alt="Logo SVG" width="76" height="22" />
@@ -14,8 +28,8 @@ const Tweet = ({ user }) => {
         <Avatar>
           <img src={user.avatar} alt={user.user} width="64" height="64" />
         </Avatar>
-        <Text>{user.tweets} tweets</Text>
-        <Text>{user.followers} Followers</Text>
+        <Text>{formateNumber(user.tweets)} tweets</Text>
+        <Text>{formateNumber(user.followers)} Followers</Text>
       </User>
       <Button active={true} onClick={() => console.log('start')} />
     </Box>

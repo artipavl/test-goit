@@ -17,8 +17,8 @@ export const App = () => {
           user: 'Roland Bode',
           avatar:
             'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/733.jpg',
-          followers: 20,
-          tweets: 73,
+          followers: 208544656,
+          tweets: 739187897289,
           id: '1',
         }}
       />
