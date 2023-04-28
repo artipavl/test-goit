@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import TweetList from 'components/tweetList/tweetList';
 import ButtonLoad from 'components/button/buttonLoad';
+import Section from 'components/section/section';
+import Container from 'components/container/container';
 
 export const TweetPage = () => {
   const [users, setUsers] = useState([]);
@@ -28,19 +30,13 @@ export const TweetPage = () => {
     return users.slice(0, 3 * page);
   }, [page, users]);
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-        gap: '15px',
-      }}
-    >
-      <TweetList list={usersList} />
-      {users.length > usersList.length && (
-        <ButtonLoad onClick={() => setPage(page => page + 1)} />
-      )}
-    </div>
+    <Section>
+      <Container>
+        <TweetList list={usersList} />
+        {users.length > usersList.length && (
+          <ButtonLoad onClick={() => setPage(page => page + 1)} />
+        )}
+      </Container>
+    </Section>
   );
 };
