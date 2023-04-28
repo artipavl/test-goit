@@ -4,7 +4,7 @@ export const Box = styled.div`
   position: relative;
   width: 380px;
   height: 460px;
-  padding: 214px 0 36px 0;
+  padding: 28px 0 36px 0;
   background: linear-gradient(
     114.99deg,
     #471ca9 -0.99%,
@@ -44,12 +44,11 @@ export const Logo = styled.img`
 `;
 
 export const Cover = styled.div`
-  position: absolute;
-  top: 28px;
-  left: 20px;
-
   width: 308px;
   height: 168px;
+
+  margin: auto;
+  margin-bottom: 18px;
 
   background-image: url(${props => props.bg});
   background-repeat: no-repeat;
@@ -74,18 +73,12 @@ export const Avatar = styled.div`
     border-radius: 50%;
   }
 `;
-// export const EllipseEl = styled.img`
-//   position: absolute;
-//   width: 80px;
-//   height: 80px;
-// `;
 
 export const Text = styled.p`
-  /* font-family: 'Montserrat'; */
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
-  line-height: 24px;
+  line-height: 1.2;
   text-transform: uppercase;
 
   color: #ebd8ff;

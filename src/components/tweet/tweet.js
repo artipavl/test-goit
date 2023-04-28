@@ -11,6 +11,7 @@ const Tweet = ({ user }) => {
     <Box>
       <Logo src={Goit} alt="Logo SVG" width="76" height="22" />
       <Cover bg={Picture}></Cover>
+      {/* <img src={Picture} alt="Cover" width="308" height="168" /> */}
       <User>
         <Avatar>
           <img src={user.avatar} alt={user.user} width="64" height="64" />
