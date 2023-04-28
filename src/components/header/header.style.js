@@ -23,9 +23,6 @@ export const Link = styled(NavLink)`
   &:focus {
     color: #5cd3a8;
   }
-  border: ${props => {
-    console.log(props);
-  }};
 
   &.active {
     color: #5cd3a8;

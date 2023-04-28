@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Goit from 'img/logo.svg';
 import Picture from 'img/picture.svg';
@@ -7,11 +7,13 @@ import Picture from 'img/picture.svg';
 import { Avatar, Box, Text, User, Cover, Logo, Svg } from './twrrt.styled';
 
 import Button from 'components/button/button';
-import { following } from 'redux/followingSlise';
+// import { following } from 'redux/followingSlise';
 
-const Tweet = ({ user }) => {
-  const disputch = useDispatch();
+const Tweet = ({ user, onUpdate }) => {
+  // const disputch = useDispatch();
+
   const follow = useSelector(state => state.folloving.following);
+
   function formateNumber(number) {
     let str = '';
     let num = number.toString();
@@ -43,8 +45,8 @@ const Tweet = ({ user }) => {
             >
               <g filter="url(#filter0_dii_832_56)">
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M45 71.1111C62.1822 71.1111 76.1111 57.1822 76.1111 40C76.1111 22.8178 62.1822 8.88889 45 8.88889C27.8178 8.88889 13.8889 22.8178 13.8889 40C13.8889 57.1822 27.8178 71.1111 45 71.1111ZM45 80C67.0914 80 85 62.0914 85 40C85 17.9086 67.0914 0 45 0C22.9086 0 5 17.9086 5 40C5 62.0914 22.9086 80 45 80Z"
                   fill="#EBD8FF"
                 />
@@ -57,9 +59,9 @@ const Tweet = ({ user }) => {
                   width="88.7833"
                   height="90.9791"
                   filterUnits="userSpaceOnUse"
-                  color-interpolation-filters="sRGB"
+                  colorInterpolationFilters="sRGB"
                 >
-                  <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
                   <feColorMatrix
                     in="SourceAlpha"
                     type="matrix"
@@ -140,7 +142,7 @@ const Tweet = ({ user }) => {
       </User>
       <Button
         active={follow.includes(user.id)}
-        onClick={() => disputch(following(user.id))}
+        onClick={() => onUpdate(user)}
       />
     </Box>
   );
