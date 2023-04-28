@@ -1,11 +1,16 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Avatar, Box, Text, User, Cover, Logo } from './twrrt.styled';
 import Button from 'components/button/button';
 
 import Goit from 'img/logo.svg';
 import Picture from 'img/picture.svg';
+import { following } from 'redux/followingSlise';
 
 const Tweet = ({ user }) => {
+  const disputch = useDispatch();
+  const follow = useSelector(state => state.folloving.following);
   function formateNumber(number) {
     let str = '';
     let num = number.toString();
@@ -31,7 +36,10 @@ const Tweet = ({ user }) => {
         <Text>{formateNumber(user.tweets)} tweets</Text>
         <Text>{formateNumber(user.followers)} Followers</Text>
       </User>
-      <Button active={true} onClick={() => console.log('start')} />
+      <Button
+        active={follow.includes(user.id)}
+        onClick={() => disputch(following(user.id))}
+      />
     </Box>
   );
 };

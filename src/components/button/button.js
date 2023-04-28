@@ -3,7 +3,7 @@ import { Btn } from './button.style';
 
 const Button = ({ onClick, active }) => {
   return (
-    <Btn active={String(active)} type="button" onClick={onClick}>
+    <Btn active={active} type="button" onClick={onClick}>
       {active ? 'Following' : 'Follow'}
     </Btn>
   );

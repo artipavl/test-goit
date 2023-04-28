@@ -1,27 +1,36 @@
-import Tweet from './tweet/tweet';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import TweetList from './tweetList/tweetList';
 
 export const App = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    if (users.length === 0) {
+      getUser();
+    }
+  }, [users.length]);
+
+  async function getUser() {
+    try {
+      const data = await axios.get(
+        'https://6390e6c10bf398c73a963e5b.mockapi.io/api/v1/users'
+      );
+      setUsers(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div
       style={{
         height: '100vh',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101',
       }}
     >
-      <Tweet
-        user={{
-          user: 'Roland Bode',
-          avatar:
-            'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/733.jpg',
-          followers: 208544656,
-          tweets: 739187897289,
-          id: '1',
-        }}
-      />
+      <TweetList list={users} />
     </div>
   );
 };
