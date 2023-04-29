@@ -6,15 +6,20 @@ import Section from 'components/section/section';
 import Container from 'components/container/container';
 import { useDispatch, useSelector } from 'react-redux';
 import { following } from 'redux/followingSlise';
+import { useSearchParams } from 'react-router-dom';
 
 export const TweetPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
+  const [query, setQuery] = useState(() => searchParams.get('q') || 'all');
+  const [totalUsers, setTotalUsers] = useState(0);
 
   const follow = useSelector(state => state.folloving.following);
 
   const disputch = useDispatch();
-
+  
   useEffect(() => {
     if (users.length === 0) {
       getUser();
@@ -33,8 +38,24 @@ export const TweetPage = () => {
   }
 
   const usersList = useMemo(() => {
-    return users.slice(0, 3 * page);
-  }, [page, users]);
+    let list = [];
+    switch (query) {
+      case 'all':
+        list = users;
+        break;
+      case 'follow':
+        list = users.filter(user => !follow.includes(user.id));
+        break;
+      case 'followings':
+        list = users.filter(user => follow.includes(user.id));
+        break;
+      default:
+        list = users;
+        break;
+    }
+    setTotalUsers(list.length);
+    return list.slice(0, 3 * page);
+  }, [query, page, users, follow]);
 
   async function addFollow(user) {
     try {
@@ -58,8 +79,24 @@ export const TweetPage = () => {
   return (
     <Section>
       <Container>
+        <div>
+          <label htmlFor="filter">Filter: </label>
+          <select
+            name="filter"
+            id="filter"
+            value={query}
+            onChange={e => {
+              setQuery(e.target.value);
+              setSearchParams({ q: e.target.value });
+            }}
+          >
+            <option value="all">show all</option>
+            <option value="follow">follow</option>
+            <option value="followings">followings</option>
+          </select>
+        </div>
         <TweetList list={usersList} onUpdate={addFollow} />
-        {users.length > usersList.length && (
+        {totalUsers > usersList.length && (
           <ButtonLoad onClick={() => setPage(page => page + 1)} />
         )}
       </Container>
