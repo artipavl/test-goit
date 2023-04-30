@@ -1,6 +1,6 @@
-import Tweet from 'components/tweet/tweet';
-import React from 'react';
 import { List } from './tweetList.style';
+
+import Tweet from 'components/tweet/tweet';
 
 const TweetList = ({ list, onUpdate }) => {
   return (

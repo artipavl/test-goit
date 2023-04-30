@@ -60,6 +60,7 @@ export const Avatar = styled.div`
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,6 +68,7 @@ export const Avatar = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 50%;
+  background-color: #5736a3;
   overflow: hidden;
 
   & > img {

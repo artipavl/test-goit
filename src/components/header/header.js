@@ -1,5 +1,3 @@
-import React from 'react';
-// import { NavLink } from 'react-router-dom';
 import { HeaderDiv, Link, NavList } from './header.style';
 
 const Header = () => {

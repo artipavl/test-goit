@@ -1,13 +1,15 @@
 import { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { following } from 'redux/followingSlise';
+import { useSearchParams } from 'react-router-dom';
+
+import { getAllUsers, putUser } from 'API/api';
+
+import Dropdown from 'components/dropdown/dropdown';
 import TweetList from 'components/tweetList/tweetList';
 import ButtonLoad from 'components/button/buttonLoad';
 import Section from 'components/section/section';
 import Container from 'components/container/container';
-import { useDispatch, useSelector } from 'react-redux';
-import { following } from 'redux/followingSlise';
-import { useSearchParams } from 'react-router-dom';
-import Dropdown from 'components/dropdown/dropdown';
 
 export const TweetPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -29,10 +31,8 @@ export const TweetPage = () => {
 
   async function getUser() {
     try {
-      const data = await axios.get(
-        'https://6390e6c10bf398c73a963e5b.mockapi.io/api/v1/users'
-      );
-      setUsers(data.data);
+      const data = await getAllUsers();
+      setUsers(data);
     } catch (error) {
       console.log(error);
     }
@@ -63,19 +63,18 @@ export const TweetPage = () => {
       const followers = follow.includes(user.id)
         ? user.followers - 1
         : user.followers + 1;
-      const { data } = await axios.put(
-        `https://6390e6c10bf398c73a963e5b.mockapi.io/api/v1/users/${user.id}`,
-        {
-          ...user,
-          followers,
-        }
-      );
+
+      const data = await putUser({
+        ...user,
+        followers,
+      });
       setUsers(users => users.map(item => (item.id === user.id ? data : item)));
       disputch(following(user.id));
     } catch (error) {
       console.log(error);
     }
   }
+
   function changeQuery(value) {
     setQuery(value);
     setSearchParams({ q: value });

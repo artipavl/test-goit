@@ -1,4 +1,3 @@
-import React from 'react';
 import { SectionBox } from './section.style';
 
 const Section = ({ children }) => {

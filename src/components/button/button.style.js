@@ -16,4 +16,9 @@ export const Btn = styled.button`
   line-height: 1.22;
   text-transform: uppercase;
   color: #373737;
+
+  &:hover,
+  &:focus {
+    background: ${props => (props.active ? '#ebd8ff' : '#5CD3A8')};
+  }
 `;

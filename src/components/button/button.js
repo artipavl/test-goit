@@ -1,4 +1,3 @@
-import React from 'react';
 import { Btn } from './button.style';
 
 const Button = ({ onClick, active, disabled = 'false' }) => {
