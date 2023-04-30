@@ -1,6 +1,4 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { following } from 'redux/followingSlise';
 import { useSearchParams } from 'react-router-dom';
 
 import { getAllUsers, putUser } from 'API/api';
@@ -10,6 +8,7 @@ import TweetList from 'components/tweetList/tweetList';
 import ButtonLoad from 'components/button/buttonLoad';
 import Section from 'components/section/section';
 import Container from 'components/container/container';
+import localStorage from 'redux-persist/es/storage';
 
 export const TweetPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,16 +18,21 @@ export const TweetPage = () => {
   const [query, setQuery] = useState(() => searchParams.get('q') || 'all');
   const [totalUsers, setTotalUsers] = useState(0);
   const [loading, setLoading] = useState(false);
-
-  const follow = useSelector(state => state.folloving.following);
-
-  const disputch = useDispatch();
+  const [follow, setFollow] = useState(() =>
+    window.localStorage.getItem('follow')
+      ? JSON.parse(window.localStorage.getItem('follow'))
+      : []
+  );
 
   useEffect(() => {
     if (users.length === 0) {
       getUser();
     }
   }, [users.length]);
+
+  useEffect(() => {
+    localStorage.setItem('follow', JSON.stringify(follow));
+  }, [follow]);
 
   async function getUser() {
     try {
@@ -71,8 +75,13 @@ export const TweetPage = () => {
         ...user,
         followers,
       });
+
       setUsers(users => users.map(item => (item.id === user.id ? data : item)));
-      disputch(following(user.id));
+      setFollow(follow =>
+        follow.includes(user.id)
+          ? follow.filter(id => id !== user.id)
+          : [...follow, user.id]
+      );
     } catch (error) {
       console.log(error);
     }
@@ -87,7 +96,7 @@ export const TweetPage = () => {
     <Section>
       <Container>
         <Dropdown value={query} onChange={changeQuery} />
-        <TweetList list={usersList} onUpdate={addFollow} />
+        <TweetList follow={follow} list={usersList} onUpdate={addFollow} />
         {totalUsers > usersList.length && (
           <ButtonLoad
             disabled={loading}

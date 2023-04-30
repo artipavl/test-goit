@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import { Avatar, Box, Text, User, Cover, Logo, Svg } from './twrrt.styled';
 
@@ -10,7 +9,7 @@ import Picture from 'img/picture.svg';
 import Hansel from 'img/Hansel.png';
 import { ReactComponent as Ellipse } from 'img/Ellipse.svg';
 
-const Tweet = ({ user, onUpdate }) => {
+const Tweet = ({ user, onUpdate, follow }) => {
   const [loading, setLoading] = useState(false);
 
   function onFollow(params) {
@@ -19,8 +18,6 @@ const Tweet = ({ user, onUpdate }) => {
       setLoading(false);
     });
   }
-
-  const follow = useSelector(state => state.folloving.following);
 
   function formateNumber(number) {
     let str = '';
