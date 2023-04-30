@@ -13,7 +13,6 @@ const Tweets = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState(() => searchParams.get('q') || 'all');
-  const [totalUsers, setTotalUsers] = useState(0);
   const [loading, setLoading] = useState(false);
   const [follow, setFollow] = useState(() =>
     localStorage.getItem('follow')
@@ -55,10 +54,9 @@ const Tweets = () => {
         list = users;
         break;
     }
-    setTotalUsers(list.length);
     setLoading(false);
-    return list.slice(0, 3 * page);
-  }, [query, page, users, follow]);
+    return list;
+  }, [query, users, follow]);
 
   async function addFollow(user) {
     try {
@@ -100,8 +98,12 @@ const Tweets = () => {
   return (
     <>
       <Dropdown value={query} onChange={changeQuery} />
-      <TweetList follow={follow} list={usersList} onUpdate={addFollow} />
-      {totalUsers > usersList.length && (
+      <TweetList
+        follow={follow}
+        list={usersList.slice(0, 3 * page)}
+        onUpdate={addFollow}
+      />
+      {usersList.length > 3 * page && (
         <ButtonLoad
           disabled={loading}
           onClick={() => setPage(page => page + 1)}
