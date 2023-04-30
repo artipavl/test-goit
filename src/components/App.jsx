@@ -1,7 +1,8 @@
-import { TweetPage } from 'pages/tweetPage';
 import { Navigate, Route, Routes } from 'react-router-dom';
+
 import Header from './header/header';
 import HomePage from 'pages/homePage';
+import TweetPage from 'pages/tweetPage';
 
 export const App = () => {
   return (
