@@ -1,10 +1,10 @@
 import React from 'react';
 import { Btn } from './button.style';
 
-const ButtonLoad = ({ onClick }) => {
+const ButtonLoad = ({ onClick, disabled = 'false' }) => {
   return (
-    <Btn type="button" onClick={onClick}>
-      Load more
+    <Btn disabled={disabled} type="button" onClick={onClick}>
+      {disabled ? 'Loading...' : 'Load more'}
     </Btn>
   );
 };

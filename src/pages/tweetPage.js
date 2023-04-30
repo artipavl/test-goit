@@ -18,6 +18,7 @@ export const TweetPage = () => {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState(() => searchParams.get('q') || 'all');
   const [totalUsers, setTotalUsers] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const follow = useSelector(state => state.folloving.following);
 
@@ -40,6 +41,7 @@ export const TweetPage = () => {
 
   const usersList = useMemo(() => {
     let list = [];
+    setLoading(true);
     switch (query) {
       case 'all':
         list = users;
@@ -55,6 +57,7 @@ export const TweetPage = () => {
         break;
     }
     setTotalUsers(list.length);
+    setLoading(false);
     return list.slice(0, 3 * page);
   }, [query, page, users, follow]);
 
@@ -77,6 +80,7 @@ export const TweetPage = () => {
 
   function changeQuery(value) {
     setQuery(value);
+    setPage(1);
     setSearchParams({ q: value });
   }
   return (
@@ -85,7 +89,10 @@ export const TweetPage = () => {
         <Dropdown value={query} onChange={changeQuery} />
         <TweetList list={usersList} onUpdate={addFollow} />
         {totalUsers > usersList.length && (
-          <ButtonLoad onClick={() => setPage(page => page + 1)} />
+          <ButtonLoad
+            disabled={loading}
+            onClick={() => setPage(page => page + 1)}
+          />
         )}
       </Container>
     </Section>
