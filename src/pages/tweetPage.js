@@ -7,6 +7,7 @@ import Container from 'components/container/container';
 import { useDispatch, useSelector } from 'react-redux';
 import { following } from 'redux/followingSlise';
 import { useSearchParams } from 'react-router-dom';
+import Dropdown from 'components/dropdown/dropdown';
 
 export const TweetPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,7 +20,7 @@ export const TweetPage = () => {
   const follow = useSelector(state => state.folloving.following);
 
   const disputch = useDispatch();
-  
+
   useEffect(() => {
     if (users.length === 0) {
       getUser();
@@ -75,26 +76,14 @@ export const TweetPage = () => {
       console.log(error);
     }
   }
-
+  function changeQuery(value) {
+    setQuery(value);
+    setSearchParams({ q: value });
+  }
   return (
     <Section>
       <Container>
-        <div>
-          <label htmlFor="filter">Filter: </label>
-          <select
-            name="filter"
-            id="filter"
-            value={query}
-            onChange={e => {
-              setQuery(e.target.value);
-              setSearchParams({ q: e.target.value });
-            }}
-          >
-            <option value="all">show all</option>
-            <option value="follow">follow</option>
-            <option value="followings">followings</option>
-          </select>
-        </div>
+        <Dropdown value={query} onChange={changeQuery} />
         <TweetList list={usersList} onUpdate={addFollow} />
         {totalUsers > usersList.length && (
           <ButtonLoad onClick={() => setPage(page => page + 1)} />
