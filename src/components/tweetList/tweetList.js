@@ -6,7 +6,9 @@ const TweetList = ({ list, onUpdate, follow }) => {
   return (
     <List>
       {list.map(item => (
-        <Tweet follow={follow} user={item} key={item.id} onUpdate={onUpdate} />
+        <li key={item.id}>
+          <Tweet follow={follow} user={item} onUpdate={onUpdate} />
+        </li>
       ))}
     </List>
   );
